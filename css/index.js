@@ -98,6 +98,7 @@
 		}
 	// }
 }
+// 单品部分相同板块
 {
 		const prev=document.querySelector(".star_prev2");
 		const next=document.querySelector(".star_next2");
@@ -149,5 +150,93 @@
 	const contentlist=document.querySelectorAll(".dapei");
 	contentlist.forEach(function(ele){
 		dapei(ele);
+	})
+}
+// 内容板块
+{
+	function wheel(parent){
+		let prev=parent.querySelector(".neirong_prev");
+		let next=parent.querySelector(".neirong_next");
+		let inner=parent.querySelector(".neirong_inner");
+		let pagers=parent.querySelectorAll(".neirong_pagebox li");
+		let contents=parent.querySelectorAll(".neirong_item_bot")
+		let n=0;
+		next.onclick=function(){
+			n++;
+			if(n===contents.length){
+				n=contents.length-1;
+				return;
+			}
+			inner.style.marginLeft=n*-296+"px";
+			pagers[n].classList.add("active");
+			pagers[n-1].classList.remove("active");
+			obj=pagers[n];
+		}
+		prev.onclick=function(){
+			n--;
+			if(n<0){
+				n=0;
+				return;
+			}
+			inner.style.marginLeft=n*-296+"px";
+			pagers[n].classList.add("active");
+			pagers[n+1].classList.remove("active");
+			obj=pagers[n];
+		}
+		let obj=pagers[0];
+		pagers.forEach(function(ele,index){
+			ele.onclick=function(){
+				obj.classList.remove("active");
+				this.classList.add("active");
+				obj=ele;
+				inner.style.marginLeft=index*-296+"px";
+				n=index;
+			}
+		})
+	}
+	let items=document.querySelectorAll(".neirong_item");
+	items.forEach(function(ele){
+		wheel(ele);
+	})
+}
+// dbanner伸展部分
+{
+	let labels=document.querySelectorAll(".dbanner_nav li");
+	let menus=document.querySelectorAll(".dbanner_menu");
+	labels.forEach(function(ele,index){
+		ele.onmouseenter=function(){
+			menus[index].style.display="block";
+		}
+		ele.onmouseleave=function(){
+			menus[index].style.display="none";
+		}
+	})
+}
+// 导航栏部分
+{
+	const line=document.querySelector(".nav_bottom_line");
+	const top=document.querySelector(".nav_wenzi");
+	const types=document.querySelectorAll(".nav_wenzi a span");
+	const box=document.querySelector(".nav_yiru");
+	const items=document.querySelectorAll(".nav_bottom_daitem");
+	const bottom=document.querySelector(".nav_bottom");
+	// console.log(top);
+	// console.log(bottom);
+	top.onmouseenter=function(){
+		bottom.style.height="220px";
+		line.style.display="block";
+	}
+	box.onmouseleave=function(){
+		bottom.style.height="0px";
+		line.style.display="none";
+	}
+	let obj=items[0];
+	types.forEach(function(ele,index){
+		ele.onmouseenter=function(){
+			obj.style.display="none";
+			items[index].style.display="block";
+			// line.style.display="block";
+			obj=items[index];
+		}
 	})
 }
